@@ -92,9 +92,9 @@ Settings → Branches → Add branch protection rule
 
 为 `main` 和 `develop` 启用：
 
-- Require a pull request before merging
-- Require approvals：1
-- Block force pushes
+  - Require a pull request before merging
+  - Require approvals：1
+  - Block force pushes
 
 ## 5. 成员配置并克隆
 
@@ -108,8 +108,8 @@ git config --global user.email "GitHub账号邮箱"
 克隆仓库：
 
 ```bash
-git clone https://github.com/组长用户名/tetris-lan.git
-cd tetris-lan
+git clone https://github.com/组长用户名/tetris.git
+cd tetris
 git switch develop
 python -m pip install -r requirements.txt
 ```
