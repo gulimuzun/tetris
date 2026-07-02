@@ -4,7 +4,7 @@ import socket
 import threading
 import time
 import pygame
-from ..config import (ACCENT, BG, CELL, FPS, GREEN, HEIGHT, MATCH_SECONDS,
+from .config import (ACCENT, BG, CELL, FPS, GREEN, HEIGHT, MATCH_SECONDS,
                      MUTED, PANEL, PINK, RED, TEXT, WIDTH)
 from .core import TetrisGame
 from .network import LanSession
@@ -28,7 +28,7 @@ OVERLAY_W = 460
 OVERLAY_H = 200
 OVERLAY_OFFSET_Y = 100
 # 刷新同步间隔
-SYNC_INTERVAL = 0.08
+SYNC_INTERVAL = 0.04
 # 对战超时等待
 WAIT_OPPONENT_TIMEOUT = 2.0
 # 文本字号常量
@@ -137,6 +137,12 @@ class TetrisApp:
     def start_single(self):
         """初始化单机对局"""
         self.game = TetrisGame()
+        self.match_finished = False
+        self.result = ""
+        self.remote = None
+        self.remote_final_score = None
+        self.finish_wait_started = None
+        self.local_final_sent = False
         self.scene = "single"
 
     def _create_lobby_buttons(self, mouse_pos):
@@ -403,6 +409,9 @@ class TetrisApp:
         base_x, base_y = 135, 110
         draw_board(self.screen, self.game.board, (base_x, base_y), local_cell_size,
                    self.current_cells(), self.ghost_cells(), "你")
+        # 联机对战仍使用完整的本地方块逻辑，在棋盘左侧显示自己的暂存和下一块。
+        draw_preview(self.screen, self.game.hold, pygame.Rect(10, 150, 110, 120), "暂存  C")
+        draw_preview(self.screen, self.game.queue[0], pygame.Rect(10, 300, 110, 120), "下一个")
         # 对手棋盘
         remote_board = self.remote["board"] if self.remote else [[""] * 10 for _ in range(20)]
         draw_board(self.screen, remote_board, (745, 150), remote_cell_size, label=self.session.peer_name)

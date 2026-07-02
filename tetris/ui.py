@@ -86,7 +86,7 @@ def draw_block(surface, rect, color, ghost=False):
     # 方块顶部浅色高光
     light_rect = rect.inflate(-6, -6)
     light_rect.height = light_rect.height // 2
-    pygame.draw.rect(surface, (min(c + 35, 255) for c in color), light_rect, border_radius=2)
+    pygame.draw.rect(surface, tuple(min(c + 35, 255) for c in color), light_rect, border_radius=2)
 
 #完整棋盘绘制，画布，棋盘数据，原点坐标，单元格大小，当前方块，幽灵方块，标题
 def draw_board(surface, board, origin, cell, current=None, ghost=None, label=None):

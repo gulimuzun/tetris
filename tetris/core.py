@@ -1,6 +1,6 @@
 import random
 from dataclasses import dataclass
-from config import COLS, ROWS
+from .config import COLS, ROWS
 
 #字典
 SHAPES = {
